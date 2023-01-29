@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Boxing</title>
+
+    <!-- Formanti UI Style-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.1/semantic.min.css"
+    />
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Sweat Alert 2 Style-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css"
+    />
+
+    <!-- My CSS -->
+    <style>
+      * {
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        text-decoration: none;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .content {
+        margin: 0 5%;
+      }
+
+      .header {
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header img {
+        width: 40px;
+      }
+
+      .header h1 {
+        margin: 0;
+      }
+
+      /* form */
+      div.form-input {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      div.form-input .card-form {
+        flex: 1 1 auto;
+        margin: 0 20px;
+      }
+
+      li {
+        /* list-style-type: none; */
+        border-bottom: solid 1px;
+        margin: 10px 0;
+      }
+
+      ol {
+        margin-left: 20px;
+      }
+
+      /* Box */
+      .box {
+        margin: 0 20px;
+        display: grid;
+        grid-template-areas:
+          "dte dte dte dte dte dte dte dte dte dte dte dte"
+          "tps tps tps tps tps tps act act act act act act"
+          "bdm bdm bdm bdm bdm bdm act act act act act act";
+        column-gap: 20px;
+        row-gap: 20px;
+      }
+
+      .date {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+        grid-area: dte;
+      }
+
+      /* priority box */
+      .priority {
+        border: solid 1px rgba(0, 0, 0, 0.2);
+        padding: 10px 15px 10px 0;
+        border-radius: 10px;
+        min-height: 50px;
+      }
+
+      /* brain dump */
+      .brain-dump {
+        border: solid 1px rgba(0, 0, 0, 0.2);
+        padding: 10px 15px 10px 0;
+        border-radius: 10px;
+        min-height: 50px;
+      }
+
+      .tps {
+        grid-area: tps;
+      }
+
+      .bdm {
+        grid-area: bdm;
+      }
+
+      .act {
+        grid-area: act;
+      }
+
+      @media (max-width: 800px) {
+        .box {
+          grid-template-areas:
+            "dte dte dte dte dte dte dte dte dte dte dte dte"
+            "tps tps tps tps tps tps tps tps tps tps tps tps"
+            "bdm bdm bdm bdm bdm bdm bdm bdm bdm bdm bdm bdm"
+            "act act act act act act act act act act act act";
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div id="form-hide">
+        <!-- Header -->
+        <div class="header">
+          <img src="assets/img/bookmark.svg" alt="Logo" />
+          <h1>The Time Box</h1>
+        </div>
+
+        <!-- Form Start -->
+        <div class="form-input">
+          <!-- Priority Form -->
+          <div class="card-form">
+            <form class="ui form">
+              <div class="field">
+                <label>Top Priority</label>
+                <input
+                  type="text"
+                  id="inputText"
+                  name="inputText"
+                  placeholder="Top Priority"
+                />
+              </div>
+              <button class="positive ui button" type="button" id="addButton">
+                Add
+              </button>
+              <button
+                class="negative ui button"
+                type="button"
+                id="deleteButton"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+
+          <!-- Brain Dump -->
+          <div class="card-form">
+            <form class="ui form">
+              <div class="field">
+                <label>Brain Dump</label>
+                <input
+                  type="text"
+                  id="brainDumpText"
+                  name="brainDumpText"
+                  placeholder="Brain Dump"
+                />
+              </div>
+              <button
+                class="positive ui button"
+                type="button"
+                id="addBrainDump"
+              >
+                Add
+              </button>
+              <button
+                class="negative ui button"
+                type="button"
+                id="deleteBrainDump"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+
+          <!-- List Activity -->
+          <div class="card-form">
+            <form class="ui form">
+              <div class="field">
+                <label>List Activity</label>
+                <input type="number" id="time" name="time" placeholder="Time" />
+              </div>
+              <div class="field">
+                <input
+                  type="text"
+                  id="activityStart"
+                  name="activityStart"
+                  placeholder="Activity Start"
+                />
+              </div>
+              <div class="field">
+                <input
+                  type="text"
+                  id="activityEnd"
+                  name="activityEnd"
+                  placeholder="Acticity End"
+                />
+              </div>
+              <button class="positive ui button" type="button" id="addActivity">
+                Add
+              </button>
+              <button
+                class="negative ui button"
+                type="button"
+                id="deleteActivity"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+        <button
+          class="ui secondary button"
+          id="printButton"
+          style="margin-left: 20px"
+        >
+          Print
+        </button>
+        <!-- Form End -->
+      </div>
+      <!-- The Box Start -->
+      <div class="box">
+        <!-- date -->
+        <div class="tittle date">
+          <h2>The Time Box</h2>
+          <div class="ui form">
+            <div class="field">
+              <div class="ui calendar">
+                <div class="ui input left icon">
+                  <i class="calendar icon"></i>
+                  <input type="text" placeholder="Pick up a date" name="date" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Priority Box -->
+        <div class="tps">
+          <h2>Top Priorities</h2>
+          <div class="priority">
+            <div class="box-content">
+              <ol id="list"></ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Brain Dump Box-->
+        <div class="bdm">
+          <h2>Brain Dump</h2>
+          <div class="brain-dump">
+            <ol id="listBrainDump"></ol>
+          </div>
+        </div>
+
+        <!-- Top List Activity Box-->
+        <div class="act">
+          <h2>List Activity</h2>
+          <div class="time-activity">
+            <table class="ui green table" id="data-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>: 00</th>
+                  <th>: 30</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- The Box End -->
+    </div>
+
+    <!-- Jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <!-- Formantic UI Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.1/semantic.min.js"></script>
+
+    <!-- Sweat Alert 2 Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+
+    <!-- My Script -->
+    <script>
+      // add top priority
+      var addButton = document.getElementById("addButton");
+      var deleteButton = document.getElementById("deleteButton");
+
+      addButton.addEventListener("click", addToList);
+      deleteButton.addEventListener("click", deleteLastChild);
+
+      function addToList() {
+        var inputText = document.getElementById("inputText").value;
+        if (inputText == "") {
+          var name = "Top Priority";
+          return modal(name);
+        }
+        var list = document.getElementById("list");
+        var newItem = document.createElement("li");
+        newItem.innerHTML = inputText;
+        list.appendChild(newItem);
+      }
+
+      function deleteLastChild() {
+        var list = document.getElementById("list");
+        var lastChild = list.lastElementChild;
+        list.removeChild(lastChild);
+      }
+
+      // add brain dump
+      var addBrainDump = document.getElementById("addBrainDump");
+      var deleteBrainDump = document.getElementById("deleteBrainDump");
+
+      addBrainDump.addEventListener("click", addBrainDumpList);
+      deleteBrainDump.addEventListener("click", deleteBrainDumpList);
+
+      function addBrainDumpList() {
+        var brainDumpText = document.getElementById("brainDumpText").value;
+        if (brainDumpText == "") {
+          var name = "Brain Dump";
+          return modal(name);
+        }
+        var listBrainDump = document.getElementById("listBrainDump");
+        var newItem = document.createElement("li");
+        newItem.innerHTML = brainDumpText;
+        listBrainDump.appendChild(newItem);
+      }
+
+      function deleteBrainDumpList() {
+        var listBrainDump = document.getElementById("listBrainDump");
+        var lastChild = listBrainDump.lastElementChild;
+        listBrainDump.removeChild(lastChild);
+      }
+
+      // list activity
+      var addActivity = document.getElementById("addActivity");
+      addActivity.addEventListener("click", addToTable);
+
+      var deleteActivity = document.getElementById("deleteActivity");
+      deleteActivity.addEventListener("click", deleteLastRow);
+
+      function addToTable() {
+        var time = document.getElementById("time").value;
+        var activityStart = document.getElementById("activityStart").value;
+        var activityEnd = document.getElementById("activityEnd").value;
+
+        if (time == "" || activityStart == "" || activityEnd == "") {
+          var name = "Activity";
+          return modal(name);
+        }
+
+        var table = document.getElementById("data-table");
+        var newRow = table.insertRow();
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+
+        cell1.innerHTML = time;
+        cell2.innerHTML = activityStart;
+        cell3.innerHTML = activityEnd;
+      }
+
+      function deleteLastRow() {
+        var table = document.getElementById("data-table");
+        var lastRow = table.rows.length - 1;
+        table.deleteRow(lastRow);
+      }
+
+      // Kalender
+      $(".ui.calendar").calendar({
+        selectAdjacentDays: true,
+        type: "date",
+      });
+
+      // sweet alert
+      function modal(name) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "The " + name + " Input is Required...!",
+        });
+      }
+
+      var printButton = document.getElementById("printButton");
+      printButton.addEventListener("click", printPage);
+
+      function printPage() {
+        var form = document.getElementById("form-hide");
+        form.style.display = "none";
+        window.print();
+        form.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
